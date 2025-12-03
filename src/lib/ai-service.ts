@@ -1,11 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY || process.env.GEMINI_KEY_API;
 const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
 
 export async function generateSummary(text: string) {
     if (!genAI) {
-        throw new Error("GEMINI_API_KEY is not configured");
+        throw new Error("GEMINI_API_KEY (or GEMINI_KEY_API) is not configured");
     }
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
