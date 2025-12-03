@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface FileUploadProps {
     onFileSelect: (file: File) => void;
@@ -46,7 +46,7 @@ export default function FileUpload({ onFileSelect, isAnalyzing }: FileUploadProp
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className={`relative w-full max-w-2xl mx-auto mt-10 p-10 border-2 border-dashed rounded-2xl text-center transition-all duration-300 ${isDragging
+            className={`relative w-full max-w-xl mx-auto mt-6 p-8 border-2 border-dashed rounded-2xl text-center transition-all duration-300 ${isDragging
                     ? "border-blue-500 bg-blue-500/10 scale-[1.02]"
                     : "border-slate-600 hover:border-slate-500 bg-slate-800/50"
                 }`}
@@ -62,10 +62,10 @@ export default function FileUpload({ onFileSelect, isAnalyzing }: FileUploadProp
                 disabled={isAnalyzing}
             />
 
-            <div className="flex flex-col items-center justify-center space-y-4 pointer-events-none">
-                <div className={`p-4 rounded-full bg-slate-700/50 transition-transform duration-300 ${isDragging ? "scale-110" : ""}`}>
+            <div className="flex flex-col items-center justify-center space-y-3 pointer-events-none">
+                <div className={`p-3 rounded-full bg-slate-700/50 transition-transform duration-300 ${isDragging ? "scale-110" : ""}`}>
                     <svg
-                        className="w-10 h-10 text-blue-400"
+                        className="w-8 h-8 text-blue-400"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -79,10 +79,10 @@ export default function FileUpload({ onFileSelect, isAnalyzing }: FileUploadProp
                     </svg>
                 </div>
                 <div>
-                    <p className="text-xl font-semibold text-slate-200">
+                    <p className="text-lg font-semibold text-slate-200">
                         {isAnalyzing ? "Analyzing..." : "Drop your paper here"}
                     </p>
-                    <p className="text-sm text-slate-400 mt-2">
+                    <p className="text-xs text-slate-400 mt-1">
                         Support PDF & Word (DOCX)
                     </p>
                 </div>
