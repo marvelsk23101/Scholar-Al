@@ -29,12 +29,26 @@ export async function generateSummary(text: string) {
         const response = await result.response;
         const textResponse = response.text();
 
-        // Clean up markdown code blocks if present to parse JSON
-        const jsonString = textResponse.replace(/^```json\n|\n```$/g, "").trim();
+        // Robustly extract JSON: remove markdown code blocks
+        let jsonString = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
 
-        return JSON.parse(jsonString);
-    } catch (error) {
+        // Sometimes the model adds extra text, try to find the first { and last }
+        const firstBrace = jsonString.indexOf("{");
+        const lastBrace = jsonString.lastIndexOf("}");
+
+        if (firstBrace !== -1 && lastBrace !== -1) {
+            jsonString = jsonString.substring(firstBrace, lastBrace + 1);
+        }
+
+        try {
+            return JSON.parse(jsonString);
+        } catch (e) {
+            console.error("JSON Parse Error. Raw text:", textResponse);
+            throw new Error(`Invalid JSON from AI: ${textResponse.substring(0, 100)}...`);
+        }
+    } catch (error: any) {
         console.error("Error generating summary:", error);
-        throw new Error("Failed to generate summary from AI");
+        // Propagate the specific error message
+        throw new Error(`AI Error: ${error.message || error}`);
     }
 }
