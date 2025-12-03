@@ -2,6 +2,11 @@
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import mammoth from "mammoth";
 
+// Disable worker to avoid loading issues in serverless environment
+if (typeof window === 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+}
+
 export async function parsePdf(buffer: Buffer): Promise<string> {
     try {
         const data = new Uint8Array(buffer);

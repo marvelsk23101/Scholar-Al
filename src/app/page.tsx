@@ -32,10 +32,18 @@ export default function Home() {
         body: formData,
       });
 
-      const data = await response.json();
+      const responseText = await response.text();
+      let data;
+
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Failed to parse JSON:", responseText);
+        throw new Error(`Server Error: ${response.status} ${response.statusText}. Please try again.`);
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to analyze file");
+        throw new Error(data.error || `Analysis failed: ${response.statusText}`);
       }
 
       setAnalysisData(data);
