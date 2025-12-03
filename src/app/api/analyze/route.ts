@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { parsePdf, parseDocx } from "@/lib/file-parser";
 import { generateSummary } from "@/lib/ai-service";
 
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
+    return NextResponse.json({ status: "API is working" });
+}
+
 export async function POST(req: NextRequest) {
     try {
         const formData = await req.formData();
