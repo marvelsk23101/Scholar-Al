@@ -8,7 +8,7 @@ export async function generateSummary(text: string) {
         throw new Error("GEMINI_API_KEY (or GEMINI_KEY_API) is not configured");
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-001" });
 
     const prompt = `
     You are an expert academic researcher. Please analyze the following academic text and provide a structured summary.
