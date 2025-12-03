@@ -3,7 +3,7 @@ import PDFParser from "pdf2json";
 
 export async function parsePdf(buffer: Buffer): Promise<string> {
     return new Promise((resolve, reject) => {
-        const pdfParser = new PDFParser(null, 1); // 1 = text only
+        const pdfParser = new PDFParser(null, true); // true = enable raw text parsing
 
         pdfParser.on("pdfParser_dataError", (errData: any) => {
             console.error("PDF Parser Error:", errData.parserError);
