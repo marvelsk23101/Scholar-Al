@@ -44,10 +44,10 @@ export async function POST(req: NextRequest) {
         const analysis = await generateSummary(text);
 
         return NextResponse.json(analysis);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Analysis error:", error);
         return NextResponse.json(
-            { error: "Internal server error during analysis." },
+            { error: error.message || "Internal server error during analysis." },
             { status: 500 }
         );
     }
